@@ -1,3 +1,6 @@
+import { useContext } from "react"
+import { authContext } from "../context/AuthContext"
+
 const Login = () => {
   return (
     <div className='flex justify-center items-center pt-8'>
@@ -22,6 +25,7 @@ const Login = () => {
                 type='email'
                 name='email'
                 id='email'
+                required
                 placeholder='Enter Your Email Here'
                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:border-gray-900 bg-gray-200 text-gray-900'
                 data-temp-mail-org='0'
@@ -37,6 +41,7 @@ const Login = () => {
                 type='password'
                 name='password'
                 id='password'
+                required
                 placeholder='*******'
                 className='w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200 focus:border-gray-900 text-gray-900'
               />
