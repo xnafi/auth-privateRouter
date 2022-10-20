@@ -1,11 +1,14 @@
+import { GoogleAuthProvider } from 'firebase/auth'
 import React, { useState } from 'react'
 import { useContext } from "react"
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { authContext } from "../context/AuthContext"
 
 const Register = () => {
   const [error, setError] = useState()
   const { createUserWithEmail, signInWithGoogle, varifyEmail, setUserName } = useContext(authContext)
+  const provider = new GoogleAuthProvider()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -35,9 +38,13 @@ const Register = () => {
         toast.success(msg)
       })
   }
-  const handleGoogleSubmit = () => {
-
+  const loginWithGoogle = () => {
+    signInWithGoogle(provider)
+      .then(() => {
+        toast.success('welcome back')
+      })
   }
+
   return (
     <div className='flex justify-center items-center pt-8'>
       <small>{error}</small>
@@ -115,7 +122,7 @@ const Register = () => {
           </p>
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
-        <div className='flex justify-center space-x-4'>
+        <div onClick={loginWithGoogle} className='flex justify-center space-x-4'>
           <button aria-label='Log in with Google' className='p-3 rounded-sm'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -146,9 +153,9 @@ const Register = () => {
         </div>
         <p className='px-6 text-sm text-center text-gray-400'>
           Already have an account yet?{' '}
-          <a href='#' className='hover:underline text-gray-600'>
+          <Link to='/register' className='hover:underline text-gray-600'>
             Sign In
-          </a>
+          </Link>
           .
         </p>
       </div>

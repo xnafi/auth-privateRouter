@@ -1,13 +1,15 @@
+import { GoogleAuthProvider } from "firebase/auth"
 import { useContext } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { authContext } from "../context/AuthContext"
 
 const Login = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const provider = new GoogleAuthProvider()
   const from = location.state?.from?.pathname || '/'
-  const { loginWithEmail, user } = useContext(authContext)
+  const { loginWithEmail, signInWithGoogle } = useContext(authContext)
   const handleLogin = (e) => {
     e.preventDefault()
     const form = e.target
@@ -20,6 +22,12 @@ const Login = () => {
         navigate(from, { replace: true })
       })
       .catch(er => console.error(er))
+  }
+  const loginWithGoogle = () => {
+    signInWithGoogle(provider)
+      .then(() => {
+        toast.success('welcome back')
+      })
   }
   return (
     <div className='flex justify-center items-center pt-8'>
@@ -90,7 +98,7 @@ const Login = () => {
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
         <div className='flex justify-center space-x-4'>
-          <button aria-label='Log in with Google' className='p-3 rounded-sm'>
+          <button onClick={loginWithGoogle} aria-label='Log in with Google' className='p-3 rounded-sm'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 32 32'
@@ -120,9 +128,9 @@ const Login = () => {
         </div>
         <p className='px-6 text-sm text-center text-gray-400'>
           Don't have an account yet?{' '}
-          <a href='#' to='/register' className='hover:underline text-gray-600'>
+          <Link to='/register' className='hover:underline text-gray-600'>
             Sign up
-          </a>
+          </Link>
           .
         </p>
       </div>
