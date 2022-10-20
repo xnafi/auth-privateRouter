@@ -41,7 +41,7 @@ const Navbar = () => {
           <Link to='/profile' className='mr-5 hover:text-gray-900'>
             Profile
           </Link>
-          <Link to='wallet' className='mr-5 hover:text-gray-900'>
+          <Link to='/wallet' className='mr-5 hover:text-gray-900'>
             Wallet
           </Link>
 
@@ -66,13 +66,11 @@ const Navbar = () => {
                 <Link to='/login' className='mr-5 hover:text-gray-900'>
                   Login
                 </Link>
-                <Link to='/register' className='mr-5 hover:text-gray-900'>
+                <Link to='register' className='mr-5 hover:text-gray-900'>
                   Register
                 </Link>
               </>
           }
-
-
 
         </nav>
       </div>

@@ -1,7 +1,26 @@
 import { useContext } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { authContext } from "../context/AuthContext"
 
 const Login = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
+  const { loginWithEmail, user } = useContext(authContext)
+  const handleLogin = (e) => {
+    e.preventDefault()
+    const form = e.target
+    const email = form.email.value
+    const password = form.password.value
+    loginWithEmail(email, password)
+      .then(() => {
+        toast.success(`Welcome`)
+        form.reset()
+        navigate(from, { replace: true })
+      })
+      .catch(er => console.error(er))
+  }
   return (
     <div className='flex justify-center items-center pt-8'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -12,6 +31,7 @@ const Login = () => {
           </p>
         </div>
         <form
+          onSubmit={handleLogin}
           noValidate=''
           action=''
           className='space-y-6 ng-untouched ng-pristine ng-valid'
